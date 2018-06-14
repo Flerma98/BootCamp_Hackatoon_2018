@@ -1,5 +1,6 @@
 package com.tec.fernandoalberto.hackaton_web_servicie_prueba;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -30,16 +38,36 @@ public class MainActivity extends AppCompatActivity {
     TextView txt1, txtTitulo;
     ArrayList<Datos_Reporte> Datos;
     ProgressBar progressBar;
+    public static int SegundosStock= 60000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txt1= findViewById(R.id.txt1);
-        txtTitulo= findViewById(R.id.titulo);
-        Datos= new ArrayList<Datos_Reporte>();
-        progressBar= findViewById(R.id.progressBar);
+        txt1 = findViewById(R.id.txt1);
+        txtTitulo = findViewById(R.id.titulo);
+        Datos = new ArrayList<Datos_Reporte>();
+        progressBar = findViewById(R.id.progressBar);
         ObtenerReportes();
+        progressBar.setVisibility(View.GONE);;
+        CuentaRegresiva(SegundosStock);
+}
+
+    public void CuentaRegresiva(final int Segundos) {
+        new CountDownTimer(Segundos, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                //Toast.makeText(MainActivity.this, "Acabó", Toast.LENGTH_SHORT).show();
+
+                ObtenerReportes();
+                CuentaRegresiva(Segundos);
+            }
+        }.start();
+
     }
 
     public void ObtenerReportes(){
@@ -53,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 String gsonCadena= new Gson().toJson(response.body());
-                progressBar.setVisibility(View.GONE);;
                 txtTitulo.setText("Proyecto Hackaton");
                 txt1.setText(gsonCadena);
                 JSONObject json = null;
