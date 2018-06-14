@@ -4,16 +4,16 @@ public class Datos_Reporte {
     String Humedad;
     String RevolucionesMinuto;
     String Fecha;
-    String ID;
+    String Hora;
 
     public Datos_Reporte() {
     }
 
-    public Datos_Reporte(String humedad, String revolucionesMinuto, String fecha, String ID) {
+    public Datos_Reporte(String humedad, String revolucionesMinuto, String fecha, String hora) {
         Humedad = humedad;
         RevolucionesMinuto = revolucionesMinuto;
         Fecha = fecha;
-        this.ID = ID;
+        Hora = hora;
     }
 
     public String getHumedad() {
@@ -40,11 +40,11 @@ public class Datos_Reporte {
         Fecha = fecha;
     }
 
-    public String getID() {
-        return ID;
+    public String getHora() {
+        return Hora;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setHora(String hora) {
+        Hora = hora;
     }
 }
