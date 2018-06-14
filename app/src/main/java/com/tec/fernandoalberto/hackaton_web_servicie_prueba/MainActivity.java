@@ -3,8 +3,10 @@ package com.tec.fernandoalberto.hackaton_web_servicie_prueba;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView txt1, txtTitulo;
     ArrayList<Datos_Reporte> Datos;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         txt1= findViewById(R.id.txt1);
         txtTitulo= findViewById(R.id.titulo);
         Datos= new ArrayList<Datos_Reporte>();
+        progressBar= findViewById(R.id.progressBar);
         ObtenerReportes();
     }
 
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 String gsonCadena= new Gson().toJson(response.body());
+                progressBar.setVisibility(View.GONE);;
                 txtTitulo.setText("Proyecto Hackaton");
                 txt1.setText(gsonCadena);
                 JSONObject json = null;
